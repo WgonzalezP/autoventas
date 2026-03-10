@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="icon" href="assets/favicon.ico" />
+    <title>Login - AutoVentas</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">AutoVentas</a>
+      </div>
+    </nav>
+
+    <section class="container d-flex justify-content-center mt-5">
+      <div class="card shadow login">
+        <div class="card-body">
+          <h4 class="text-center mb-4">Login</h4>
+          <form id="formLogin">
+            <div class="mb-3">
+              <label class="form-label">Correo electrónico</label>
+              <input type="email" id="correo" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-primary">Ingresar</button>
+            </div>
+
+            <div class="text-center">
+              <small>
+                ¿No tienes cuenta?
+                <a href="registro.html">Regístrate aquí</a>
+              </small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const form = document.querySelector("#formLogin");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const correo = document.querySelector("#correo").value;
+        const password = document.querySelector("#password").value;
+
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+        let usuarioValido = usuarios.find(
+          (user) => user.correo === correo && user.password === password,
+        );
+
+        if (usuarioValido) {
+          // GUARDAR SESION
+          localStorage.setItem("usuarioActivo", JSON.stringify(usuarioValido));
+
+          // REDIRIGIR
+          window.location.href = "panel.html";
+        } else {
+          alert("Correo o contraseña incorrectos");
+        }
+      });
+    </script>
+  </body>
+</html>
